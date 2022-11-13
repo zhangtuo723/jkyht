@@ -27,8 +27,8 @@ function App() {
           {/* 精确匹配也能匹配到带有参数的path */}
           {/* 不管是hash还是brower都不用在path和to里面写#号，会自动加 */}
           <Route  path="/login" component={Login}></Route>
-
           <AuthRote path="/home" component={Home}></AuthRote>
+          <AuthRote component={Home}></AuthRote>
           {/* 配置404 */}
           {/* <Route component={Test}></Route> */}
           <AuthRote component={NotFound404}></AuthRote>

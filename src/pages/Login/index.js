@@ -16,7 +16,7 @@ export default class Login extends Component {
           <img src={logo} alt="" className="login-logo" />
           {/* 表单 */}
           <Form
-          className='aa'
+          
           autoComplete="off" 
           size="large"
           onFinish = {this.onFinish}
@@ -102,8 +102,8 @@ export default class Login extends Component {
       // 判断 location中是否有值
 
       const {state} = this.props.location
-
       if(state){
+        // console.log(state);
         this.props.history.push(state.from)
       }else{
         this.props.history.push('/home')

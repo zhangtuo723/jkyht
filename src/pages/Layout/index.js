@@ -27,7 +27,7 @@ export default class LayoutComponent extends Component {
     // console.log(this.props);
     return (
       <div className={styles.layout}>
-        <Layout>
+        <Layout >
           <Header className="header">
             <div className="logo" />
             <div className="profile">
@@ -72,6 +72,7 @@ export default class LayoutComponent extends Component {
             <Layout
               style={{
                 padding: '24px',
+                overflow:"auto"
               }}
             >
               <Content className="site-layout-background">
