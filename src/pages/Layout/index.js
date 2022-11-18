@@ -3,37 +3,46 @@ import {
   HomeOutlined,
   DiffOutlined,
   EditOutlined,
-} from '@ant-design/icons'
-import { Layout, Menu, message, Popconfirm } from 'antd'
-import React, { Component } from 'react'
-import styles from './index.module.scss'
-import { Route, Switch, Link } from 'react-router-dom'
-import{removeToken} from 'utils/storage'
-import Home from 'pages/Home'
-import ArticleList from 'pages/ArticleList'
-import ArticlePublish from 'pages/ArticlePublish'
-import {getUserProfile} from 'api/user'
-const { Header, Content, Sider } = Layout
-
+} from "@ant-design/icons";
+import { Layout, Menu, message, Popconfirm } from "antd";
+import React, { Component } from "react";
+import styles from "./index.module.scss";
+import { Route, Switch, Link } from "react-router-dom";
+import { removeToken } from "utils/storage";
+import Home from "pages/Home";
+import ArticleList from "pages/ArticleList";
+import ArticlePublish from "pages/ArticlePublish";
+import { getUserProfile } from "api/user";
+const { Header, Content, Sider } = Layout;
 
 export default class LayoutComponent extends Component {
   state = {
-    profile:{}
-  }
-  
+    profile: {},
+    selectKey:this.props.location.pathname
+  };
 
+  componentDidUpdate(prevProps){
+    let pathname = this.props.location.pathname
+    if(pathname.startsWith('/home/article')){
+      pathname = '/home/article'
+    }
+    if(prevProps.location.pathname!==this.props.location.pathname){
+      this.setState({
+        selectKey:pathname
+      })
+    }
+  }
 
   render() {
     // console.log(this.props);
     return (
       <div className={styles.layout}>
-        <Layout >
+        <Layout>
           <Header className="header">
             <div className="logo" />
             <div className="profile">
               <span>{this.state.profile.name}</span>
               <span>
-                
                 <Popconfirm
                   title="你确定要退出本系统吗?"
                   onConfirm={this.onConfirm}
@@ -52,9 +61,9 @@ export default class LayoutComponent extends Component {
               <Menu
                 mode="inline"
                 theme="dark"
-                defaultSelectedKeys={[this.props.location.pathname]}
+                selectedKeys={[this.state.selectKey]}
                 style={{
-                  height: '100%',
+                  height: "100%",
                   borderRight: 0,
                 }}
               >
@@ -71,8 +80,8 @@ export default class LayoutComponent extends Component {
             </Sider>
             <Layout
               style={{
-                padding: '24px',
-                overflow:"auto"
+                padding: "24px",
+                overflow: "auto",
               }}
             >
               <Content className="site-layout-background">
@@ -81,8 +90,16 @@ export default class LayoutComponent extends Component {
                   <Route exact path="/home" component={Home}></Route>
                   <Route path="/home/list" component={ArticleList}></Route>
                   <Route
+                  exact
                     path="/home/article"
                     component={ArticlePublish}
+                    key='add'
+                  ></Route>
+
+                  <Route
+                    path="/home/article/:id"
+                    component={ArticlePublish}
+                    key='edit'
                   ></Route>
                 </Switch>
               </Content>
@@ -90,26 +107,25 @@ export default class LayoutComponent extends Component {
           </Layout>
         </Layout>
       </div>
-    )
+    );
   }
 
-   async componentDidMount(){
+  async componentDidMount() {
     // console.log(11);
-    const res = await getUserProfile()
+    const res = await getUserProfile();
     // console.log(res);
     this.setState({
-      profile:res.data
-    })
-
+      profile: res.data,
+    });
   }
 
-  onConfirm = ()=>{
+  onConfirm = () => {
     // console.log('ddd');
     // 移除token
-  
+
     // localStorage.removeItem('token')
-    removeToken()
-    this.props.history.push('/login')
-    message.success('退出成功！')
-  }
+    removeToken();
+    this.props.history.push("/login");
+    message.success("退出成功！");
+  };
 }

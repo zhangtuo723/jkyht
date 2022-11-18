@@ -1,4 +1,4 @@
-import {Router,Route,Switch} from 'react-router-dom'
+import {Router,Route,Switch,Redirect} from 'react-router-dom'
 // import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import Home from './pages/Layout'
 import Login from './pages/Login'
@@ -16,6 +16,8 @@ function App() {
         {/* <Link to="/login">登录</Link>
         <Link to="/home">首页</Link> */}
         {/* <Test></Test> */}
+
+        
         <Switch>
           {/* 可以使用render替换component */}
           {/* <Route path="/login" component={Login}></Route> */}
@@ -26,6 +28,7 @@ function App() {
 
           {/* 精确匹配也能匹配到带有参数的path */}
           {/* 不管是hash还是brower都不用在path和to里面写#号，会自动加 */}
+          <Redirect exact from='/' to='/home'></Redirect>  {/* redirect有from时候必须卸载switch中*/}
           <Route  path="/login" component={Login}></Route>
           <AuthRote path="/home" component={Home}></AuthRote>
           <AuthRote component={Home}></AuthRote>

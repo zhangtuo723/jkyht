@@ -2,8 +2,9 @@ import { message } from 'antd';
 import axios from 'axios'
 import {hasToken,getToken, removeToken} from 'utils/storage'
 import history from 'utils/history'
+export const baseURL = 'http://geek.itheima.net/v1_0'
 const instance = axios.create({
-    baseURL:'http://geek.itheima.net/v1_0',
+    baseURL:baseURL,
     timeout:5000,
 
 })
@@ -27,8 +28,9 @@ instance.interceptors.response.use(function (response) {
 
     return response.data;
   }, function (error) {
-    // 超出 2xx 范围的状态码都会触发该函数。
-    // 对响应错误做点什么
+    if(!error.response){
+      return Promise.reject(new Error('网络异常'))
+    }
     if(error.response.status===401){
       // 代表token过期了
       // 1.删除token

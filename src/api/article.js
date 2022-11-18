@@ -7,3 +7,31 @@ export const getArticleList = (params)=>{
         params
     })
 }
+
+export const delArticle = (id)=>{
+    return request({
+        url:`/mp/articles/${id}`,
+        method:'DELETE'
+    })
+}
+
+export const pubArticle = (data,draft=false)=>{
+    return request({
+        url:`/mp/articles?draft=${draft}`,
+        method:'post',
+        data
+    })
+}
+export const getArticleById =(id)=>{
+    return request({
+        url:`/mp/articles/${id}`
+    })
+}
+
+export const updateArticle = (data,id,draft=false)=>{
+    return request({
+        url:`/mp/articles/${id}?draft=${draft}`,
+        method:'put',
+        data
+    })
+}
